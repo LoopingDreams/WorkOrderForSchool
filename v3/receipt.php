@@ -59,6 +59,30 @@ $post_data['taxable_amount'] = $taxable_amount;
 $post_data['tax_amount'] = $tax_amount;
 $post_data['total'] = $total;
 
+// Handle signature data
+$signature_data = isset($post_data['signature']) ? $post_data['signature'] : '';
+
+// If you want to save the signature as an image:
+if (!empty($signature_data)) {
+    $signature_data = str_replace('data:image/png;base64,', '', $signature_data);
+    $signature_data = str_replace(' ', '+', $signature_data);
+    $signature_binary = base64_decode($signature_data);
+    
+    // Generate unique filename
+    $filename = 'signatures/' . uniqid() . '.png';
+    
+    // Make sure the signatures directory exists
+    if (!file_exists('signatures')) {
+        mkdir('signatures', 0777, true);
+    }
+    
+    // Save the signature
+    file_put_contents($filename, $signature_binary);
+    
+    // Store the filename in post_data for display
+    $post_data['signature_file'] = $filename;
+}
+
 // Clear the session data after retrieving it
 unset($_SESSION['work_order_data']);
 
@@ -401,6 +425,11 @@ function sanitize_output($value) {
             <div class="signature-line">Signature</div>
             <div class="signature-line">Date</div>
         </div>
+        <?php if (!empty($post_data['signature_file'])): ?>
+            <img src="<?php echo htmlspecialchars($post_data['signature_file']); ?>" 
+                 alt="Signature" 
+                 class="max-w-[200px]">
+        <?php endif; ?>
         <p style="font-style: italic;">Thank You For Your Business!</p>
     </div>
 

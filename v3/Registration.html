@@ -38,6 +38,7 @@
             transition-duration: 150ms;
         }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.5/dist/signature_pad.umd.min.js"></script>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
     <div class="min-h-screen py-12 px-4 sm:px-6 lg:px-8">
@@ -256,10 +257,21 @@
                             <input type="text" class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white 
                                                    shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50" name="payable_to">
                         </div>
+                        <!-- Replace the existing signature input with this -->
                         <div>
-                            <label for="signature" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Signature</label>
-                            <input type="text" class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white 
-                                                   shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50" name="signature">
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Signature</label>
+                            <div class="border border-gray-300 dark:border-gray-600 rounded-md overflow-hidden">
+                                <canvas id="signaturePad" class="w-full bg-white dark:bg-gray-800" height="200"></canvas>
+                            </div>
+                            <div class="mt-2 flex gap-2">
+                                <button type="button" 
+                                        id="clearSignature" 
+                                        class="px-3 py-1 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 
+                                               text-gray-700 dark:text-gray-300 rounded-md transition-colors duration-200">
+                                    Clear
+                                </button>
+                                <input type="hidden" name="signature" id="signatureInput">
+                            </div>
                         </div>
                         <div>
                             <label for="completed_date" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Completed Date</label>
@@ -451,6 +463,31 @@
             addRowEventListeners(newRow);
         };
 
+        // Initialize signature pad
+        const canvas = document.getElementById('signaturePad');
+        const signaturePad = new SignaturePad(canvas, {
+            backgroundColor: 'rgb(255, 255, 255)',
+            penColor: 'rgb(0, 0, 0)'
+        });
+
+        // Adjust canvas size
+        function resizeCanvas() {
+            const ratio = Math.max(window.devicePixelRatio || 1, 1);
+            canvas.width = canvas.offsetWidth * ratio;
+            canvas.height = canvas.offsetHeight * ratio;
+            canvas.getContext("2d").scale(ratio, ratio);
+            signaturePad.clear();
+        }
+
+        window.addEventListener("resize", resizeCanvas);
+        resizeCanvas();
+
+        // Clear signature
+        document.getElementById('clearSignature').addEventListener('click', () => {
+            signaturePad.clear();
+        });
+
+        // Modify the existing validateForm function to include signature
         function validateForm() {
             // Basic form validation
             const required = ['work_order_id', 'requested_by', 'customer_id', 'department'];
@@ -461,8 +498,24 @@
                     return false;
                 }
             }
+
+            if (signaturePad.isEmpty()) {
+                alert('Please provide a signature');
+                return false;
+            }
+
+            // Store signature data in hidden input
+            document.getElementById('signatureInput').value = signaturePad.toDataURL();
             return true;
         }
+
+        // Handle dark mode changes for signature pad
+        document.getElementById('darkModeToggle').addEventListener('click', () => {
+            const isDark = document.documentElement.classList.contains('dark');
+            signaturePad.backgroundColor = isDark ? 'rgb(31, 41, 55)' : 'rgb(255, 255, 255)';
+            signaturePad.penColor = isDark ? 'rgb(255, 255, 255)' : 'rgb(0, 0, 0)';
+            signaturePad.clear();
+        });
     </script>
 </body>
 </html>

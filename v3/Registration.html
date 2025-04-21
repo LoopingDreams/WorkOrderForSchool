@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Work Order Registration</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0d6efd',
+                        secondary: '#6c757d',
+                        dark: {
+                            bg: '#1a1a1a',
+                            card: '#2d2d2d'
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-out',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .transition-colors {
+            transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+            transition-duration: 150ms;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
+    <div class="min-h-screen py-12 px-4 sm:px-6 lg:px-8">
+        <!-- Header Section -->
+        <div class="max-w-4xl mx-auto">
+            <div class="bg-gradient-to-r from-primary to-blue-400 rounded-lg shadow-lg p-8 mb-8 animate-fade-in">
+                <div class="flex items-center justify-center gap-4">
+                    <!-- Add your company logo -->
+                    <img src="company-logo.png" alt="Company Logo" class="w-32 h-32 object-contain">
+                    <div>
+                        <h1 class="text-3xl font-bold text-white">Dwayne & Friends Co.</h1>
+                        <div class="text-white mt-2 text-sm">
+                            <p>123 Saligan St.</p>
+                            <p>Bacolod, 6100</p>
+                            <p>Phone: 555 123-4567</p>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-center text-white mt-4">Work Order Management System</p>
+            </div>
+
+            <!-- Add Dark Mode Toggle Button -->
+            <div class="flex justify-end mb-4">
+                <button type="button" 
+                        id="darkModeToggle"
+                        class="flex items-center px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white transition-colors duration-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                    </svg>
+                    Toggle Dark Mode
+                </button>
+            </div>
+
+            <!-- Form Section -->
+            <form id="workOrderForm" class="space-y-6" action="receipt.php" method="POST" onsubmit="return validateForm()">
+                <!-- Work Order Info -->
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 p-6">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-700 pb-2 mb-4">
+                        Work Order Info
+                    </h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                Work Order #
+                            </label>
+                            <input type="text" 
+                                   name="work_order_id" 
+                                   required
+                                   class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white 
+                                          shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                Requested By
+                            </label>
+                            <input type="text" 
+                                   name="requested_by" 
+                                   required
+                                   class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white 
+                                          shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                Customer ID
+                            </label>
+                            <input type="text" 
+                                   name="customer_id" 
+                                   required
+                                   class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white 
+                                          shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                Department
+                            </label>
+                            <select name="department" 
+                                    required
+                                    class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white 
+                                           shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50">
+                                <option value="">Select Department</option>
+                                <option value="Chemistry">Chemistry</option>
+                                <option value="Engineering">Engineering</option>
+                                <option value="Information Technology">Information Technology</option>
+                                <option value="Automotives">Automotives</option>
+                                <option value="Food Tech">Food Tech</option>
+                                <option value="Information Systems">Information Systems</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bill To -->
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 p-6">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-700 pb-2 mb-4">
+                        Bill To
+                    </h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="bill_to_name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Name</label>
+                            <input type="text" class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white 
+                                                   shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50" name="bill_to_name" required>
+                        </div>
+                        <div>
+                            <label for="bill_to_company" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Company Name</label>
+                            <input type="text" class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white 
+                                                   shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50" name="bill_to_company">
+                        </div>
+                        <div>
+                            <label for="bill_to_address" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Street Address</label>
+                            <input type="text" class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white 
+                                                   shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50" name="bill_to_address">
+                        </div>
+                        <div>
+                            <label for="bill_to_city_zip" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">City/ZIP</label>
+                            <input type="text" class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white 
+                                                   shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50" name="bill_to_city_zip">
+                        </div>
+                        <div>
+                            <label for="bill_to_phone" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Phone</label>
+                            <input type="text" class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white 
+                                                   shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50" name="bill_to_phone">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Job Details -->
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 p-6">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-700 pb-2 mb-4">
+                        Job Details
+                    </h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="col-span-2">
+                            <label for="job_details" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Description of Work</label>
+                            <textarea class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white 
+                                           shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50" name="job_details" rows="3"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Work Order Items -->
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 p-6">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-700 pb-2 mb-4">
+                        Work Order Items
+                    </h2>
+                    <div id="items-container">
+                        <div class="grid grid-cols-1 md:grid-cols-5 gap-6 item-row mb-3">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Qty</label>
+                                <input type="number" class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white 
+                                                       shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50" name="items[0][qty]" required>
+                            </div>
+                            <div class="col-span-2">
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Description</label>
+                                <input type="text" class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white 
+                                                       shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50" name="items[0][description]" required>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="form-check mt-4">
+                                    <input class="form-check-input" type="checkbox" name="items[0][taxed]" value="1">
+                                    <label class="form-check-label text-gray-700 dark:text-gray-300">Taxed</label>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Unit Price</label>
+                                <input type="number" step="0.01" class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white 
+                                                       shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50" name="items[0][unit_price]" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Total Price</label>
+                                <input type="number" step="0.01" class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white 
+                                                       shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50" name="items[0][total_price]" required>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" 
+                            class="mt-4 px-4 py-2 bg-secondary hover:bg-gray-600 text-white rounded-md
+                                   transition-colors duration-200 dark:bg-gray-700 dark:hover:bg-gray-600"
+                            onclick="addItem()">
+                        Add Item
+                    </button>
+                </div>
+
+                <!-- Others -->
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 p-6">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-700 pb-2 mb-4">
+                        Others
+                    </h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div>
+                            <label for="subtotal" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Subtotal</label>
+                            <input type="number" step="0.01" class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white 
+                                                   shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50" name="subtotal" readonly>
+                        </div>
+                        <div>
+                            <label for="taxable_amount" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Taxable Amount</label>
+                            <input type="number" step="0.01" class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white 
+                                                   shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50" name="taxable_amount" readonly>
+                        </div>
+                        <div>
+                            <label for="tax_rate" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Tax Rate</label>
+                            <input type="text" class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white 
+                                                   shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50" name="tax_rate" value="12%" readonly>
+                        </div>
+                        <div>
+                            <label for="tax_amount" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Tax Amount</label>
+                            <input type="number" step="0.01" class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white 
+                                                   shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50" name="tax_amount" readonly>
+                        </div>
+                        <div>
+                            <label for="total" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Total</label>
+                            <input type="number" step="0.01" class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white 
+                                                   shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50" name="total" readonly>
+                        </div>
+                        <div>
+                            <label for="payable_to" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Payable To</label>
+                            <input type="text" class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white 
+                                                   shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50" name="payable_to">
+                        </div>
+                        <div>
+                            <label for="signature" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Signature</label>
+                            <input type="text" class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white 
+                                                   shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50" name="signature">
+                        </div>
+                        <div>
+                            <label for="completed_date" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Completed Date</label>
+                            <input type="date" class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white 
+                                                   shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50" name="completed_date">
+                        </div>
+                        <div>
+                            <label for="date_signed" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Date Signed</label>
+                            <input type="date" class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white 
+                                                   shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50" name="date_signed">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Other Comments -->
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 p-6">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-700 pb-2 mb-4">
+                        Other Comments
+                    </h2>
+                    <div class="space-y-4">
+                        <div class="text-gray-700 dark:text-gray-300">
+                            <ol class="list-decimal list-inside space-y-2 mb-6">
+                                <li>Total payment due 30 days after completion of work</li>
+                                <li>Please refer to the W.O# in all your correspondence</li>
+                                <li>Please send correspondence regarding work order to:</li>
+                            </ol>
+                        </div>
+
+                        <!-- Contact Form -->
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                    Contact Name
+                                </label>
+                                <input type="text" 
+                                       name="contact_name" 
+                                       class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white 
+                                              shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                    Contact Phone
+                                </label>
+                                <input type="tel" 
+                                       name="contact_phone" 
+                                       class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white 
+                                              shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                    Contact Email
+                                </label>
+                                <input type="email" 
+                                       name="contact_email" 
+                                       class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white 
+                                              shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" 
+                        class="w-full bg-primary hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg
+                               transform transition-all duration-300 hover:-translate-y-1 
+                               focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50
+                               dark:bg-blue-600 dark:hover:bg-blue-700">
+                    Submit Work Order
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Dark Mode Toggle functionality
+        if (localStorage.getItem('darkMode') === 'true' || 
+            (!('darkMode' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        }
+
+        document.getElementById('darkModeToggle').addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('darkMode', document.documentElement.classList.contains('dark'));
+        });
+
+        function addItem() {
+            const container = document.getElementById('items-container');
+            const itemRows = container.getElementsByClassName('item-row');
+            const newIndex = itemRows.length;
+            
+            // Clone the first item row
+            const template = itemRows[0].cloneNode(true);
+            
+            // Update the name attributes with new index
+            template.querySelectorAll('input').forEach(input => {
+                const name = input.getAttribute('name');
+                if (name) {
+                    input.setAttribute('name', name.replace('[0]', `[${newIndex}]`));
+                    input.value = ''; // Clear the input values
+                }
+            });
+            
+            // Add margin top to separate rows
+            template.classList.add('mt-4');
+            
+            // Add delete button for rows after the first one
+            const deleteButton = document.createElement('button');
+            deleteButton.type = 'button';
+            deleteButton.className = 'mt-4 px-2 py-1 bg-red-500 hover:bg-red-600 text-white rounded-md transition-colors duration-200';
+            deleteButton.textContent = 'Delete';
+            deleteButton.onclick = function() {
+                template.remove();
+                updateCalculations(); // Add this function if you have pricing calculations
+            };
+            
+            const lastColumn = template.children[template.children.length - 1];
+            lastColumn.appendChild(deleteButton);
+            
+            // Add the new row to the container
+            container.appendChild(template);
+            addRowEventListeners(template); // Add event listeners to the new row
+        }
+
+        function updateRowTotal(row) {
+            const qty = parseFloat(row.querySelector('input[name*="[qty]"]').value) || 0;
+            const unitPrice = parseFloat(row.querySelector('input[name*="[unit_price]"]').value) || 0;
+            const totalPriceInput = row.querySelector('input[name*="[total_price]"]');
+            const total = qty * unitPrice;
+            totalPriceInput.value = total.toFixed(2);
+        }
+
+        function updateCalculations() {
+            const rows = document.querySelectorAll('.item-row');
+            let subtotal = 0;
+            let taxableAmount = 0;
+
+            rows.forEach(row => {
+                const totalPrice = parseFloat(row.querySelector('input[name*="[total_price]"]').value) || 0;
+                const isTaxed = row.querySelector('input[name*="[taxed]"]').checked;
+                
+                subtotal += totalPrice;
+                if (isTaxed) {
+                    taxableAmount += totalPrice;
+                }
+            });
+
+            const taxRate = 0.12; // 12%
+            const taxAmount = taxableAmount * taxRate;
+            const total = subtotal + taxAmount;
+
+            // Update the summary fields
+            document.querySelector('input[name="subtotal"]').value = subtotal.toFixed(2);
+            document.querySelector('input[name="taxable_amount"]').value = taxableAmount.toFixed(2);
+            document.querySelector('input[name="tax_amount"]').value = taxAmount.toFixed(2);
+            document.querySelector('input[name="total"]').value = total.toFixed(2);
+        }
+
+        // Add event listeners to all item rows
+        function addRowEventListeners(row) {
+            const qtyInput = row.querySelector('input[name*="[qty]"]');
+            const unitPriceInput = row.querySelector('input[name*="[unit_price]"]');
+            const taxedCheckbox = row.querySelector('input[name*="[taxed]"]');
+
+            qtyInput.addEventListener('input', () => {
+                updateRowTotal(row);
+                updateCalculations();
+            });
+
+            unitPriceInput.addEventListener('input', () => {
+                updateRowTotal(row);
+                updateCalculations();
+            });
+
+            taxedCheckbox.addEventListener('change', () => {
+                updateCalculations();
+            });
+        }
+
+        // Initialize event listeners for existing rows
+        document.querySelectorAll('.item-row').forEach(row => {
+            addRowEventListeners(row);
+        });
+
+        // Modify the existing addItem function to include event listeners
+        const originalAddItem = window.addItem;
+        window.addItem = function() {
+            originalAddItem();
+            const newRow = document.querySelectorAll('.item-row')[document.querySelectorAll('.item-row').length - 1];
+            addRowEventListeners(newRow);
+        };
+
+        function validateForm() {
+            // Basic form validation
+            const required = ['work_order_id', 'requested_by', 'customer_id', 'department'];
+            for (const field of required) {
+                const input = document.querySelector(`[name="${field}"]`);
+                if (!input.value) {
+                    alert(`Please fill out ${field.replace('_', ' ')}`);
+                    return false;
+                }
+            }
+            return true;
+        }
+    </script>
+</body>
+</html>

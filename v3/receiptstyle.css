@@ -1,0 +1,108 @@
+body { 
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    line-height: 1.4;
+    margin: 20px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.company-info {
+    flex: 1;
+}
+
+.work-order-info {
+    text-align: right;
+    flex: 1;
+}
+
+.blue-header {
+    background: #2b579a;
+    color: white;
+    padding: 4px 8px;
+    margin-bottom: 5px;
+}
+
+.gray-header {
+    background: #f0f0f0;
+    padding: 4px 8px;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.items-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 15px 0;
+}
+
+.items-table th {
+    background: #2b579a;
+    color: white;
+    text-align: left;
+    padding: 4px 8px;
+}
+
+.items-table td {
+    padding: 4px 8px;
+    border-bottom: 1px solid #ddd;
+}
+
+.totals-table {
+    width: 200px;
+    margin-left: auto;
+}
+
+.signature-line {
+    border-top: 1px solid #000;
+    width: 200px;
+    margin-top: 50px;
+    text-align: center;
+}
+
+.comments {
+    margin: 20px 0;
+    font-size: 11px;
+}
+
+.flex-container {
+    display: flex;
+    gap: 20px;
+}
+
+.flex-item {
+    flex: 1;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.mt-4 {
+    margin-top: 1.5rem;
+}
+
+.btn {
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    border: none;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}

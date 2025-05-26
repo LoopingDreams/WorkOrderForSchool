@@ -1,0 +1,258 @@
+/* Wave Background Animations - Pure CSS/SVG Implementation */
+
+.wave-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.wave-container.page-background {
+    background: linear-gradient(135deg, #f8f9ff 0%, #e8f2ff 100%);
+}
+
+.wave-container.form-background {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+}
+
+.wave-container.dashboard-background {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+/* Wave layers */
+.wave {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z' opacity='.25'/%3E%3Cpath d='M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z' opacity='.5'/%3E%3Cpath d='M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z'/%3E%3C/svg%3E");
+    background-size: 1200px 120px;
+    animation: waveAnimation 10s ease-in-out infinite;
+    opacity: 0.6;
+}
+
+.wave:nth-child(2) {
+    bottom: 10px;
+    animation-duration: 12s;
+    animation-direction: reverse;
+    opacity: 0.4;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z'/%3E%3C/svg%3E");
+    background-size: 1200px 120px;
+}
+
+.wave:nth-child(3) {
+    bottom: 20px;
+    animation-duration: 8s;
+    opacity: 0.3;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z'/%3E%3C/svg%3E");
+    background-size: 1200px 120px;
+}
+
+.wave:nth-child(4) {
+    bottom: 30px;
+    animation-duration: 15s;
+    animation-direction: reverse;
+    opacity: 0.2;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,0V7.23C0,65.52,268.63,112.77,600,112.77S1200,65.52,1200,7.23V0Z'/%3E%3C/svg%3E");
+    background-size: 1200px 120px;
+}
+
+@keyframes waveAnimation {
+    0%, 100% {
+        transform: translateX(0px);
+    }
+    50% {
+        transform: translateX(-100px);
+    }
+}
+
+/* Floating elements animation */
+.floating-elements {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.floating-element {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    animation: float 15s infinite linear;
+}
+
+.floating-element:nth-child(1) {
+    left: 10%;
+    width: 15px;
+    height: 15px;
+    animation-delay: 0s;
+    animation-duration: 12s;
+}
+
+.floating-element:nth-child(2) {
+    left: 20%;
+    width: 25px;
+    height: 25px;
+    animation-delay: 2s;
+    animation-duration: 18s;
+}
+
+.floating-element:nth-child(3) {
+    left: 35%;
+    width: 10px;
+    height: 10px;
+    animation-delay: 4s;
+    animation-duration: 15s;
+}
+
+.floating-element:nth-child(4) {
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    animation-delay: 6s;
+    animation-duration: 20s;
+}
+
+.floating-element:nth-child(5) {
+    left: 70%;
+    width: 30px;
+    height: 30px;
+    animation-delay: 8s;
+    animation-duration: 14s;
+}
+
+.floating-element:nth-child(6) {
+    left: 85%;
+    width: 12px;
+    height: 12px;
+    animation-delay: 10s;
+    animation-duration: 16s;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100px) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Responsive wave adjustments */
+@media (max-width: 768px) {
+    .wave {
+        height: 60px;
+        background-size: 800px 60px;
+    }
+    
+    .wave:nth-child(2) {
+        bottom: 5px;
+        background-size: 800px 60px;
+    }
+    
+    .wave:nth-child(3) {
+        bottom: 10px;
+        background-size: 800px 60px;
+    }
+    
+    .wave:nth-child(4) {
+        bottom: 15px;
+        background-size: 800px 60px;
+    }
+}
+
+/* Content overlay adjustments */
+.content-overlay {
+    position: relative;
+    z-index: 1;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    margin: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.content-overlay.transparent {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Wave pattern variations */
+.wave-pattern-1 {
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z' fill='%23ffffff' fill-opacity='0.3'/%3E%3C/svg%3E");
+}
+
+.wave-pattern-2 {
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z' fill='%23ffffff' fill-opacity='0.2'/%3E%3C/svg%3E");
+}
+
+.wave-pattern-3 {
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z' fill='%23ffffff' fill-opacity='0.15'/%3E%3C/svg%3E");
+}
+
+/* Page-specific wave themes */
+.waves-theme-ocean {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.waves-theme-sunset {
+    background: linear-gradient(135deg, #ff7e5f 0%, #feb47b 100%);
+}
+
+.waves-theme-forest {
+    background: linear-gradient(135deg, #134e5e 0%, #71b280 100%);
+}
+
+.waves-theme-purple {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.waves-theme-mint {
+    background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+}
+
+/* Interactive wave effects */
+.wave-interactive {
+    transition: transform 0.3s ease;
+}
+
+.wave-interactive:hover {
+    transform: scale(1.02);
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    .wave,
+    .floating-element {
+        animation: none;
+    }
+    
+    .wave-interactive {
+        transition: none;
+    }
+}
+
+/* Performance optimizations */
+.wave-container * {
+    will-change: transform;
+    transform: translateZ(0);
+}

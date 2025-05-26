@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wave Background Integration - Work Order System</title>
+    
+    <!-- Original Stylesheets -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    
+    <!-- Wave Background Stylesheets -->
+    <link href="css/wave-background.css" rel="stylesheet">
+    
+    <style>
+        /* Integration-specific styles */
+        .demo-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px 0;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .theme-selector {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            min-width: 200px;
+        }
+        
+        .theme-button {
+            width: 100%;
+            margin: 5px 0;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .theme-button.ocean {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .theme-button.sunset {
+            background: linear-gradient(135deg, #ff7e5f 0%, #feb47b 100%);
+            color: white;
+        }
+        
+        .theme-button.forest {
+            background: linear-gradient(135deg, #134e5e 0%, #71b280 100%);
+            color: white;
+        }
+        
+        .theme-button.purple {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .theme-button.mint {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            color: #333;
+        }
+        
+        .integration-code {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <!-- Wave Background Container -->
+    <div class="wave-container waves-theme-ocean" id="waveContainer">
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+        
+        <!-- Floating Elements -->
+        <div class="floating-elements">
+            <div class="floating-element"></div>
+            <div class="floating-element"></div>
+            <div class="floating-element"></div>
+            <div class="floating-element"></div>
+            <div class="floating-element"></div>
+            <div class="floating-element"></div>
+        </div>
+    </div>
+    
+    <!-- Theme Selector -->
+    <div class="theme-selector">
+        <h6><i class="bi bi-palette"></i> Wave Themes</h6>
+        <button class="theme-button ocean" onclick="switchTheme('ocean')">Ocean</button>
+        <button class="theme-button sunset" onclick="switchTheme('sunset')">Sunset</button>
+        <button class="theme-button forest" onclick="switchTheme('forest')">Forest</button>
+        <button class="theme-button purple" onclick="switchTheme('purple')">Purple</button>
+        <button class="theme-button mint" onclick="switchTheme('mint')">Mint</button>
+        <hr>
+        <button class="btn btn-sm btn-outline-secondary w-100" onclick="toggleWaves()">
+            <span id="toggleText">Hide Waves</span>
+        </button>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="container">
+        <div class="demo-section">
+            <h1><i class="bi bi-water"></i> Wave Background Integration</h1>
+            <p class="lead">Beautiful animated wave backgrounds for your Work Order System</p>
+            
+            <!-- CSS Integration -->
+            <div class="demo-section">
+                <h3>🎨 CSS Implementation (Recommended)</h3>
+                <p>Pure CSS/SVG implementation with excellent performance:</p>
+                
+                <div class="integration-code">
+&lt;!-- Add to your HTML head --&gt;
+&lt;link href="css/wave-background.css" rel="stylesheet"&gt;
+
+&lt;!-- Add wave container to your page body --&gt;
+&lt;div class="wave-container waves-theme-ocean"&gt;
+    &lt;div class="wave"&gt;&lt;/div&gt;
+    &lt;div class="wave"&gt;&lt;/div&gt;
+    &lt;div class="wave"&gt;&lt;/div&gt;
+    &lt;div class="wave"&gt;&lt;/div&gt;
+    
+    &lt;!-- Optional floating elements --&gt;
+    &lt;div class="floating-elements"&gt;
+        &lt;div class="floating-element"&gt;&lt;/div&gt;
+        &lt;div class="floating-element"&gt;&lt;/div&gt;
+        &lt;div class="floating-element"&gt;&lt;/div&gt;
+        &lt;div class="floating-element"&gt;&lt;/div&gt;
+        &lt;div class="floating-element"&gt;&lt;/div&gt;
+        &lt;div class="floating-element"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Your existing content with overlay class --&gt;
+&lt;div class="content-overlay"&gt;
+    &lt;!-- Your work order form content --&gt;
+&lt;/div&gt;
+                </div>
+                
+                <h5>Available Themes:</h5>
+                <ul>
+                    <li><code>waves-theme-ocean</code> - Ocean blue gradient</li>
+                    <li><code>waves-theme-sunset</code> - Orange to yellow gradient</li>
+                    <li><code>waves-theme-forest</code> - Dark to green gradient</li>
+                    <li><code>waves-theme-purple</code> - Purple gradient</li>
+                    <li><code>waves-theme-mint</code> - Mint to pink gradient</li>
+                </ul>
+            </div>
+            
+            <!-- React Integration -->
+            <div class="demo-section">
+                <h3>⚛️ React Implementation</h3>
+                <p>For dynamic, interactive wave backgrounds:</p>
+                
+                <div class="integration-code">
+&lt;!-- Add React scripts to your existing React setup --&gt;
+&lt;script src="js/react-wave-background.js"&gt;&lt;/script&gt;
+
+&lt;script type="text/babel"&gt;
+// Basic usage
+const App = () =&gt; {
+    return (
+        &lt;WaveBackgroundManager config={{
+            theme: 'ocean',
+            intensity: 'medium',
+            speed: 'normal',
+            showControls: true
+        }}&gt;
+            &lt;!-- Your existing work order form --&gt;
+        &lt;/WaveBackgroundManager&gt;
+    );
+};
+
+ReactDOM.render(&lt;App /&gt;, document.getElementById('root'));
+&lt;/script&gt;
+                </div>
+                
+                <h5>React Props:</h5>
+                <ul>
+                    <li><code>theme</code>: 'ocean', 'sunset', 'forest', 'purple', 'mint'</li>
+                    <li><code>intensity</code>: 'low', 'medium', 'high'</li>
+                    <li><code>speed</code>: 'slow', 'normal', 'fast'</li>
+                    <li><code>layers</code>: Number of wave layers (1-6)</li>
+                    <li><code>showControls</code>: Show theme switcher</li>
+                </ul>
+            </div>
+            
+            <!-- Integration with Work Order System -->
+            <div class="demo-section">
+                <h3>🔧 Integration with Your Work Order System</h3>
+                
+                <h5>Step 1: Add CSS File</h5>
+                <div class="integration-code">
+&lt;!-- Add to your index.php head section --&gt;
+&lt;link href="css/wave-background.css" rel="stylesheet"&gt;
+                </div>
+                
+                <h5>Step 2: Update Body Structure</h5>
+                <div class="integration-code">
+&lt;body&gt;
+    &lt;!-- Add wave background --&gt;
+    &lt;div class="wave-container waves-theme-ocean"&gt;
+        &lt;div class="wave"&gt;&lt;/div&gt;
+        &lt;div class="wave"&gt;&lt;/div&gt;
+        &lt;div class="wave"&gt;&lt;/div&gt;
+        &lt;div class="wave"&gt;&lt;/div&gt;
+        &lt;div class="floating-elements"&gt;
+            &lt;div class="floating-element"&gt;&lt;/div&gt;
+            &lt;div class="floating-element"&gt;&lt;/div&gt;
+            &lt;div class="floating-element"&gt;&lt;/div&gt;
+            &lt;div class="floating-element"&gt;&lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    
+    &lt;!-- Wrap your existing container --&gt;
+    &lt;div class="container content-overlay"&gt;
+        &lt;!-- Your existing work order form --&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+                </div>
+                
+                <h5>Step 3: Page-Specific Themes</h5>
+                <div class="integration-code">
+&lt;!-- index.php (new orders) --&gt;
+&lt;div class="wave-container waves-theme-ocean"&gt;
+
+&lt;!-- customers.php --&gt;
+&lt;div class="wave-container waves-theme-sunset"&gt;
+
+&lt;!-- dashboard.php --&gt;
+&lt;div class="wave-container waves-theme-forest"&gt;
+
+&lt;!-- reports.php --&gt;
+&lt;div class="wave-container waves-theme-purple"&gt;
+
+&lt;!-- settings.php --&gt;
+&lt;div class="wave-container waves-theme-mint"&gt;
+                </div>
+            </div>
+            
+            <!-- Performance & Accessibility -->
+            <div class="demo-section">
+                <h3>⚡ Performance & Accessibility</h3>
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5>Performance Features:</h5>
+                        <ul>
+                            <li>Hardware-accelerated CSS animations</li>
+                            <li>Optimized SVG wave patterns</li>
+                            <li>Responsive design adjustments</li>
+                            <li>Minimal CPU/GPU usage</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h5>Accessibility Features:</h5>
+                        <ul>
+                            <li>Respects <code>prefers-reduced-motion</code></li>
+                            <li>High contrast mode support</li>
+                            <li>Screen reader friendly</li>
+                            <li>Keyboard navigation support</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Customization -->
+            <div class="demo-section">
+                <h3>🎨 Customization</h3>
+                
+                <h5>Create Custom Themes:</h5>
+                <div class="integration-code">
+.waves-theme-custom {
+    background: linear-gradient(135deg, #your-color-1 0%, #your-color-2 100%);
+}
+
+/* Adjust wave opacity */
+.waves-theme-custom .wave {
+    opacity: 0.4; /* Adjust as needed */
+}
+
+/* Custom floating elements */
+.waves-theme-custom .floating-element {
+    background: rgba(your-color, 0.2);
+}
+                </div>
+                
+                <h5>Control Wave Speed:</h5>
+                <div class="integration-code">
+.wave-slow {
+    animation-duration: 20s !important;
+}
+
+.wave-fast {
+    animation-duration: 5s !important;
+}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- React Component Demo (if React is loaded) -->
+    <div id="react-wave-demo"></div>
+    
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- React CDN (for demo) -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <!-- Wave Background React Component -->
+    <script src="js/react-wave-background.js"></script>
+    
+    <!-- Theme Switching Logic -->
+    <script>
+        let wavesVisible = true;
+        
+        function switchTheme(theme) {
+            const container = document.getElementById('waveContainer');
+            container.className = `wave-container waves-theme-${theme}`;
+            
+            // Update active button
+            document.querySelectorAll('.theme-button').forEach(btn => {
+                btn.style.opacity = '0.7';
+                btn.style.transform = 'scale(1)';
+            });
+            
+            const activeBtn = document.querySelector(`.theme-button.${theme}`);
+            if (activeBtn) {
+                activeBtn.style.opacity = '1';
+                activeBtn.style.transform = 'scale(1.05)';
+            }
+        }
+        
+        function toggleWaves() {
+            const container = document.getElementById('waveContainer');
+            const toggleText = document.getElementById('toggleText');
+            
+            if (wavesVisible) {
+                container.style.display = 'none';
+                toggleText.textContent = 'Show Waves';
+                wavesVisible = false;
+            } else {
+                container.style.display = 'block';
+                toggleText.textContent = 'Hide Waves';
+                wavesVisible = true;
+            }
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            switchTheme('ocean');
+        });
+        
+        // React Demo (if React is available)
+        if (typeof React !== 'undefined' && typeof ReactDOM !== 'undefined') {
+            setTimeout(() => {
+                const ReactDemo = () => {
+                    return React.createElement('div', {
+                        style: {
+                            position: 'fixed',
+                            bottom: '20px',
+                            left: '20px',
+                            background: 'rgba(255, 255, 255, 0.9)',
+                            padding: '15px',
+                            borderRadius: '10px',
+                            boxShadow: '0 4px 15px rgba(0, 0, 0, 0.1)',
+                            zIndex: 1000
+                        }
+                    }, [
+                        React.createElement('h6', { key: 'title' }, '⚛️ React Demo'),
+                        React.createElement('p', { 
+                            key: 'desc',
+                            style: { fontSize: '0.9rem', margin: '5px 0' }
+                        }, 'React components loaded!'),
+                        React.createElement('button', {
+                            key: 'btn',
+                            className: 'btn btn-sm btn-primary',
+                            onClick: () => {
+                                // Demo React wave switching
+                                switchTheme(['ocean', 'sunset', 'forest', 'purple', 'mint'][Math.floor(Math.random() * 5)]);
+                            }
+                        }, 'Random Theme')
+                    ]);
+                };
+                
+                ReactDOM.render(React.createElement(ReactDemo), document.getElementById('react-wave-demo'));
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
